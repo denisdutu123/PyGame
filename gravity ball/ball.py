@@ -14,12 +14,12 @@ col = r,g,b
 grav = 2000.0
 
 class ball():
-    def __init__ (self, initial_x, initial_y):
+    def __init__ (self, initial_x, initial_y, radius):
         self.initial_x = initial_x
         self.inital_y = initial_y
         self.vx = 200
         self.vy = 0
-        self.radius = 60
+        self.radius = radius
     def draw(self):
         r = random.randint(0,255)
         g = random.randint(0,255)
@@ -28,10 +28,12 @@ class ball():
         col = r,g,b
         pos = (self.initial_x, self.inital_y)
         screen.draw.filled_circle(pos, self.radius, col)
-ba1 = ball(400, 350)
-ba2 = ball(300,250)
-ba3 = ball(390, 400)
-obj = [ba1, ba2, ba3]
+ba1 = ball(400, 350, 56)
+ba2 = ball(300,250, 23)
+ba3 = ball(390, 400, 89)
+ba4 = ball(275, 250, 39)
+ba5 = ball(340, 274, 71)
+obj = [ba1, ba2, ba3, ba4, ba5]
 def draw():
     for i in obj:
         i.draw()
@@ -55,8 +57,7 @@ def on_key_down(key):
         ba1.vy = -350
         ba2.vy = -300
         ba3.vy = -325
+        ba4.vy = -300
+        ba5.vy = -390
 
 pgzrun.go()
-
-
-        
