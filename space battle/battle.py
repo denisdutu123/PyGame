@@ -20,6 +20,7 @@ maxbul = 5
 lebul = []
 ribul = []
 heafon = pygame.font.SysFont("pacifico", 40)
+wi = pygame.font.SysFont("monospace", 70)
 #colours
 red = (255, 0, 0)
 white = (255, 255, 255)
@@ -54,8 +55,8 @@ def bullet():
     for i in ribul:
         pygame.draw.rect(scr, ryellow, i)
         i.x-=bulspe
-        
-        
+lehit = pygame.USEREVENT+1
+rihit = pygame.USEREVENT+2
             
         
 # object creation 
@@ -64,6 +65,34 @@ ri = ship(righ, 600, 350)
 gro = pygame.sprite.Group()
 gro.add(le)
 gro.add(ri)
+
+def collide():
+    global lefhea, righea
+    for n in lebul:
+        if ri.rect.colliderect(n):
+            righea-=1
+            lebul.remove(n)
+        elif n.x > 900:
+            lebul.remove(n)
+    for n in ribul:
+        if le.rect.colliderect(n):
+            lefhea-=1
+            ribul.remove(n)
+        elif n.x < 0:
+            ribul.remove(n)
+    for n1 in lebul:
+        for n2 in ribul:
+            if n1.colliderect(n2):
+                lebul.remove(n1)
+                ribul.remove(n2)
+def endgame(txt):
+    tex = wi.render(txt, 1, "blue")
+    scr.blit(tex, (200, 150))
+    pygame.display.update()
+    pygame.time.delay(5000)
+    
+    
+    
 
         
 bor = pygame.Rect(450, 0, 20, 700)
@@ -83,6 +112,14 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == KEYDOWN:
+            if event.key == K_1:
+                bulll = pygame.Rect(le.rect.x + le.rect.width, le.rect.y + le.rect.height // 2, 10, 5)
+                lebul.append(bulll)
+            if event.key == K_2:
+                bulll = pygame.Rect(ri.rect.x, ri.rect.y + ri.rect.height // 2, 10, 5)
+                ribul.append(bulll)
+                
     ke = pygame.key.get_pressed()
     # player 1
     if ke [K_a]:
@@ -105,5 +142,19 @@ while run:
     
     display()
     gro.draw(scr)
+    bullet()
+    collide()
+    if righea == 0:
+        winnn = "Left ship wins"
+        endgame(winnn)
+        run = False
+    if lefhea == 0:
+        winnn = "Right ship wins"
+        endgame(winnn)
+        run = False
+    
+    
+    
+        
     pygame.display.update()
 pygame.quit()
