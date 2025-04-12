@@ -1,5 +1,4 @@
-
-        import pygame
+import pygame
 from pygame.locals import *
 import os
 import random
@@ -9,21 +8,25 @@ pygame.font.init()
 WIDTH = 900
 HEIGHT = 800
 score = 0
+fon = pygame.font.SysFont("Bold", 50)
 scr = pygame.display.set_mode((WIDTH, HEIGHT))
 background = pygame.transform.scale(pygame.image.load("background.webp"), (900, 800))
-tom = pygame.image.load("tom.png")
-jerry = pygame.image.load("jerry.png")
+tom = pygame.transform.scale(pygame.image.load("tom.png"), (100, 125))
+jerry = pygame.transform.scale(pygame.image.load("jerry.png"), (100, 70))
 tomspee = 6
 
 class to(pygame.sprite.Sprite):
     def __init__(self, image, xaxis, yaxis):
+        super().__init__()
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = xaxis
         self.rect.y = yaxis
+        
 
 class jerr(pygame.sprite.Sprite):
     def __init__(self, image, xaxis, yaxis):
+        super().__init__()
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = xaxis
@@ -31,17 +34,22 @@ class jerr(pygame.sprite.Sprite):
         
 
     def position(self):
-        self.rect.pos = random.randint(0, 800), random.randint(0, 400) 
+        self.rect.x = random.randint(0, 800)
+        self.rect.y = random.randint(0,400)
 
 def collide():
-    if tom.rect.colliderect():
-        score =+1
-    else:
-        score = 0
+    global score
+    if tomob.rect.colliderect(jerryob):
+        jerryob.position()
+        score + 1 
 
 def draw():
     scr.blit(background, (0, 0))
-    #scr.draw.text("GAME OVER, score:"+str(score), center = (450, 400), fontsize = 50)
+    tex1 = fon.render("score:"+str(score), 1, "White")
+    scr.blit(tex1, (150, 100))
+    
+    
+    
 #quit function
 run = True
 tomob = to(tom, 500, 350)
@@ -59,17 +67,17 @@ while run:
 # moveme for tom
     ke = pygame.key.get_pressed()
     if ke [K_a]:
-        tomob.x-=5
+        tomob.rect.x-=5
     if ke [K_d]:
-        tomob.x+=5
+        tomob.rect.x+=5
     if ke [K_w]:
-        tomob.y+=5
+        tomob.rect.y-=5
     if ke [K_s]:
-        tomob.y-=5
+        tomob.rect.y+=5
     
     draw()
     grou.draw(scr)
-    #collide()
+    collide()
     pygame.display.update()
 
 pygame.quit()
