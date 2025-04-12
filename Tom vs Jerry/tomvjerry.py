@@ -41,14 +41,12 @@ def collide():
     global score
     if tomob.rect.colliderect(jerryob):
         jerryob.position()
-        score + 1 
+        score +=1 
 
 def draw():
     scr.blit(background, (0, 0))
     tex1 = fon.render("score:"+str(score), 1, "White")
     scr.blit(tex1, (150, 100))
-    
-    
     
 #quit function
 run = True
