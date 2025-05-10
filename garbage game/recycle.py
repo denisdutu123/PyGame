@@ -6,9 +6,13 @@ from pygame.locals import*
 WIDTH = 1200
 HEIGHT = 800
 
+colo = (123, 67, 234)
+scor = 0
 pygame.init()
 pygame.display.set_caption("RECYCLE GAME")
 scr = pygame.display.set_mode((WIDTH, HEIGHT))
+fon = pygame.font.SysFont("Opitc", 40)
+tex = fon.render("Score:", str(scor), True, colo)
 
 # changing background
 def background(image):
@@ -63,8 +67,8 @@ for i in range(25):
     grou.add(imag)
     
 
-    
-    
+scr.blit(tex, (200, 100))
+pygame.display.update()
         
 
         
