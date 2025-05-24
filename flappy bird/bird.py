@@ -4,7 +4,7 @@ from pygame.locals import*
 
 pygame.init()
 
-scr = pygame.display.set_mode((864, 936))
+scr = pygame.display.set_mode((864, 750))
 pygame.display.set_caption("Flappy Bird")
 fps = 60
 clock = pygame.time.Clock()
@@ -48,6 +48,47 @@ class bird (pygame.sprite.Sprite):
         self.rect.center = [xpos, ypos]
         self.vel = 0
         self.clicked = False
+    def update(self):
+        if fly == True:
+            self.vel +=0.7
+            if self.vel > 7:
+                self.vel = 7
+            if self.rect.bottom < 750:
+                self.rect.y += int(self.vel)
+        if gaove == False:
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                self.clicked = True
+                self.vel =- 10
+            if pygame.mouse.get_pressed()[0] == 0:
+                self.clicked = False
+            # animating the bird
+            flap = 6
+            self.counter += 1
+            if self.counter > flap:
+                self.counter = 0
+                self.index += 1
+                if self.index >= len(self.images):
+                    self.index = 0
+                self.image = self.images[self.index]     
+# class for pipes
+class pipes(pygame.sprite.Sprite):
+    def __init__ (self, xaxis, yaxis, pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("pipe.png")
+        self.rect = self.image.get_rect()
+        #top or bottom pipe
+        if pos == 1:
+            self.image = pygame.transform.flip(self.image, False, True )
+            self.rect.bottomleft = [x, y - int(gap/2)]
+        elif pos == -1:
+            self.rect.topleft = [x, y + int(gap/2)]
+    
+            
+         
+        
+    
+    
+    
 
 obj = bird(100, 450)
 #group bird
@@ -56,9 +97,20 @@ group.add(obj)
 
 run = True
 while run:
+    clock.tick(fps)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEBUTTONDOWN and fly == False and gaove == False:
+            fly = True
     scr.blit(background, (0, 0))
+    
+    scr.blit(ground, (grouscr, 675)) 
+    group.draw(scr)
+    group.update() 
+    if fly == True and gaove == False:
+        grouscr -= scrolspe 
+        if abs(grouscr) > 36:
+            grouscr = 0
     pygame.display.update()
     
