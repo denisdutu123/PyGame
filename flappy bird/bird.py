@@ -4,7 +4,7 @@ from pygame.locals import*
 
 pygame.init()
 
-scr = pygame.display.set_mode((864, 750))
+scr = pygame.display.set_mode((864, 700))
 pygame.display.set_caption("Flappy Bird")
 fps = 60
 clock = pygame.time.Clock()
@@ -17,8 +17,8 @@ grouscr = 0
 scrolspe = 6
 fly = False
 gaove = False
-gap = 145
-frepip = 1600
+gap = 200
+frepip = 1500
 score = 0
 paspip = False
 lastpipe = pygame.time.get_ticks() - frepip
@@ -121,7 +121,7 @@ while run:
     if fly == True and gaove == False:
         tim = pygame.time.get_ticks()
         if tim - lastpipe > frepip:
-            piphei = random.randint(-150, 150)
+            piphei = random.randint(-200, 200)
             bottpip = pipes(864, 375 + piphei, -1)
             toppip = pipes(864, 375 + piphei, 1)
             groupip.add(bottpip)
@@ -135,5 +135,3 @@ while run:
             
     pygame.display.update()
     
-
-
