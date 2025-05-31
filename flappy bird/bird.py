@@ -79,9 +79,15 @@ class pipes(pygame.sprite.Sprite):
         #top or bottom pipe
         if pos == 1:
             self.image = pygame.transform.flip(self.image, False, True )
-            self.rect.bottomleft = [x, y - int(gap/2)]
+            self.rect.bottomleft = [xaxis, yaxis - int(gap/2)]
         elif pos == -1:
-            self.rect.topleft = [x, y + int(gap/2)]
+            self.rect.topleft = [xaxis, yaxis + int(gap/2)]
+    # update function
+    def update(self):
+        self.rect.x -= scrolspe
+        if self.rect.right < 0:
+            self.kill()
+            
     
             
          
@@ -94,6 +100,9 @@ obj = bird(100, 450)
 #group bird
 group = pygame.sprite.Group()
 group.add(obj)
+# group pipe
+groupip = pygame.sprite.Group()
+
 
 run = True
 while run:
@@ -107,10 +116,24 @@ while run:
     
     scr.blit(ground, (grouscr, 675)) 
     group.draw(scr)
+    groupip.draw(scr)
     group.update() 
     if fly == True and gaove == False:
+        tim = pygame.time.get_ticks()
+        if tim - lastpipe > frepip:
+            piphei = random.randint(-150, 150)
+            bottpip = pipes(864, 375 + piphei, -1)
+            toppip = pipes(864, 375 + piphei, 1)
+            groupip.add(bottpip)
+            groupip.add(toppip)
+            lastpip = tim
+        groupip.update()
+        
         grouscr -= scrolspe 
         if abs(grouscr) > 36:
             grouscr = 0
+            
     pygame.display.update()
     
+
+
