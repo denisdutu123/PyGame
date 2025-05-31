@@ -88,6 +88,25 @@ class pipes(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.kill()
             
+            
+class button():
+    def __init__ (self, x, y, image):
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+    def draw(self):
+        action = False
+        pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1:
+                action = True
+        scr.blit(self.image, (self.rect.x, self.rect.y))
+        return action
+# button object
+butto = button(432, 375, restart)
+
+            
+            
     
             
          
@@ -118,20 +137,25 @@ while run:
     group.draw(scr)
     groupip.draw(scr)
     group.update() 
+    if obj.rect.bottom >= 750:
+        gaove = True
+        fly = False
     if fly == True and gaove == False:
         tim = pygame.time.get_ticks()
         if tim - lastpipe > frepip:
-            piphei = random.randint(-200, 200)
+            piphei = random.randint(-150, 150)
             bottpip = pipes(864, 375 + piphei, -1)
             toppip = pipes(864, 375 + piphei, 1)
             groupip.add(bottpip)
             groupip.add(toppip)
-            lastpip = tim
+            lastpipe = tim
         groupip.update()
         
         grouscr -= scrolspe 
         if abs(grouscr) > 36:
             grouscr = 0
-            
+    if gaove == True:
+        if butto.draw():
+            gaove = False
     pygame.display.update()
     
