@@ -102,6 +102,13 @@ class button():
                 action = True
         scr.blit(self.image, (self.rect.x, self.rect.y))
         return action
+def reset ():
+    groupip.empty()
+    obj.rect.x = 100
+    obj.rect.y = 450
+    score = 0
+    return score
+
 # button object
 butto = button(432, 375, restart)
 
@@ -134,7 +141,7 @@ while run:
                     paspip = True
                     
         if paspip == True:
-            if group.sprites()[0].rect.left > groupip.sprites()[0].rect.left:
+            if group.sprites()[0].rect.left > groupip.sprites()[0].rect.right:
                 score +=1
                 paspip = False
     if pygame.sprite.groupcollide(group, groupip, False, False) or obj.rect.top < 0 :
@@ -173,5 +180,6 @@ while run:
     if gaove == True:
         if butto.draw():
             gaove = False
+            score = reset()
     pygame.display.update()
     
