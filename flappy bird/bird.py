@@ -106,14 +106,7 @@ class button():
 butto = button(432, 375, restart)
 
             
-            
-    
-            
-         
-        
-    
-    
-    
+
 
 obj = bird(100, 450)
 #group bird
@@ -132,7 +125,30 @@ while run:
         if event.type == pygame.MOUSEBUTTONDOWN and fly == False and gaove == False:
             fly = True
     scr.blit(background, (0, 0))
+    # updating score
+    if len(groupip) > 0:
+        
+        if group.sprites()[0].rect.left > groupip.sprites()[0].rect.left\
+            and group.sprites()[0].rect.right < groupip.sprites()[0].rect.right\
+                and paspip == False:
+                    paspip = True
+                    
+        if paspip == True:
+            if group.sprites()[0].rect.left > groupip.sprites()[0].rect.left:
+                score +=1
+                paspip = False
+    if pygame.sprite.groupcollide(group, groupip, False, False) or obj.rect.top < 0 :
+        gaove = True
+        fly = False
+    if obj.rect.bottom >= 700:
+        gaove = True
+        fly = False
     
+        
+        
+        
+        
+    text(str(score), fon, "Red", 100, 75)
     scr.blit(ground, (grouscr, 675)) 
     group.draw(scr)
     groupip.draw(scr)
